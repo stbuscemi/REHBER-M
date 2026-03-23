@@ -1,5 +1,6 @@
-import { useState, useRef, useEffect } from "react";
+import dynamic from "next/dynamic";
 import Head from "next/head";
+import { useState, useRef, useEffect } from "react";
 
 const SOURCES = [
   { id: "quran", label: "Kuran-ı Kerim", emoji: "☪️", color: "#10b981" },
@@ -43,7 +44,7 @@ const SOURCE_PROMPTS = {
   shamanism: "Şamanizm ve animist gelenek perspektifinden yorum yap. Ruh dünyası, ata ruhlar, denge ve doğayla uyum temalarını işle. Türkçe yaz.",
 };
 
-export default function Home() {
+function Home() {
   const [situation, setSituation] = useState("");
   const [selectedSource, setSelectedSource] = useState(null);
   const [response, setResponse] = useState("");
@@ -245,3 +246,5 @@ export default function Home() {
     </>
   );
 }
+
+export default dynamic(() => Promise.resolve(Home), { ssr: false });
