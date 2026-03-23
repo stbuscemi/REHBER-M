@@ -20,9 +20,14 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
+
+    if (!response.ok) {
+      return res.status(200).json({ result: `HATA: ${JSON.stringify(data)}` });
+    }
+
     const text = data.content?.map((b) => b.text || "").join("") || "Yanıt alınamadı.";
     res.status(200).json({ result: text });
   } catch (e) {
-    res.status(500).json({ error: "Bir hata oluştu." });
+    res.status(500).json({ result: `HATA: ${e.message}` });
   }
 }
